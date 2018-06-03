@@ -255,6 +255,27 @@ InkProject.prototype.save = function() {
         }
     });
 }
+InkProject.prototype.switch = function() {
+
+    var wasUnsaved = !this.mainInk.projectDir;
+
+    var filesRemaining = this.files.length;
+    var includeFiles = _.filter(this.files, f => f != this.mainInk);
+
+    var allSuccess = true;
+
+    var fileSwitchComplete = (file, success) => {
+        allSuccess = allSuccess && success;
+        if( success ) this.unsavedFiles.remove(file);
+
+        filesRemaining--;
+        if( filesRemaining == 0 ) {
+            this.refreshUnsavedChanges();
+
+            if( allSuccess )
+                InkProject.events.didSave();
+        }
+    }
 
 // Helper to copy a file whilst optionally transforming the content
 function copyFile(source, destination, transform) {

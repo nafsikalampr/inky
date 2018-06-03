@@ -50,6 +50,11 @@ ProjectWindow.prototype.newInclude = function() {
     this.browserWindow.webContents.send('project-new-include');
 }
 
+//My contribution
+ProjectWindow.prototype.switch = function() {
+    this.browserWindow.webContents.send('project-switch');
+}
+
 ProjectWindow.prototype.save = function() {
     this.browserWindow.webContents.send('project-save');
 }
@@ -122,8 +127,9 @@ ProjectWindow.open = function(filePath) {
             filePath = multiSelectPaths[0];
     }
 
-    // TODO: Could check whether the filepath is relative to any of our
-    // existing open projects, and switch to that window?
+    /* TODO: Could check whether the filepath is relative to any of our
+             existing open projects, and switch to that window?
+    */
 
     if( filePath)
         return new ProjectWindow(filePath);

@@ -1,4 +1,4 @@
-const electron = require('electron')
+ const electron = require('electron')
 const app = electron.app
 const ipc = electron.ipcMain;
 const dialog = electron.dialog;
@@ -11,13 +11,14 @@ const Inklecate = require("./inklecate.js").Inklecate;
 
 function inkJSNeedsUpdating() {
     return false;
-    // dialog.showMessageBox({
-    //   type: 'error',
-    //   buttons: ['Okay'],
-    //   title: 'Export for web unavailable',
-    //   message: "Sorry, export for web is currently disabled, until inkjs is updated to support the latest version of ink. You can download a previous version of Inky that supports inkjs and use that instead, although some of the latest features of ink may be missing."
-    // });
-    // return true;
+    /* dialog.showMessageBox({
+       type: 'error',
+       buttons: ['Okay'],
+       title: 'Export for web unavailable',
+       message: "Sorry, export for web is currently disabled, until inkjs is updated to support the latest version of ink. You can download a previous version of Inky that supports inkjs and use that instead, although some of the latest features of ink may be missing."
+     });
+     return true;
+    */
 }
 
 app.on('will-finish-launching', function () {
@@ -30,9 +31,11 @@ app.on('will-finish-launching', function () {
 
 let isQuitting = false;
 
+/*
+    in case user presses quit and doesn't close the app
+    if app closes inky does not quit but remains open
+*/
 app.on('before-quit', function () {
-    // We need this to differentiate between pressing quit (which should quit) or closing all windows
-    // (which leaves the app open)
     isQuitting = true;
 });
 
@@ -40,9 +43,10 @@ ipc.on("project-cancelled-close", (event) => {
     isQuitting = false;
 });
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+/* This method will be called when Electron has finished
+   initialization and is ready to create browser windows.
+   Some APIs can only be used after this event occurs.
+*/
 app.on('ready', function () {
 
     app.on('window-all-closed', function () {
@@ -51,10 +55,18 @@ app.on('ready', function () {
         }
     });
 
+    /*
+        creating the functinality of the top "File" menu 
+    */
     appmenus.setupMenus({
         new: () => {
             ProjectWindow.createEmpty();
         },
+        //My contribution
+        switch: () => {
+            ProjectWindow.switch();
+        },
+        //
         newInclude: () => {
             var win = ProjectWindow.focused();
             if (win) win.newInclude();
@@ -124,6 +136,10 @@ app.on('ready', function () {
     //w.openDevTools();
 });
 
+/*
+    when user quits session
+    when user forcequits
+*/
 function finalQuit() {
     Inklecate.killSessions();
 }

@@ -5,6 +5,10 @@ const dialog = electron.dialog;
 const _ = require("lodash");
 const Menu = electron.Menu;
 
+/*
+Creates inky's top menu - navigation bar when you open the app. 
+*/
+
 function setupMenus(callbacks) {
   const template = [
     {
@@ -15,6 +19,16 @@ function setupMenus(callbacks) {
           accelerator: 'CmdOrCtrl+N',
           click: callbacks.new
         },
+
+        //My contribution
+        {
+          label: 'Switch Project',
+          accelerator: 'CmdOrCtrl+Shift+S',
+          click: callbacks.switch
+        },
+        //
+
+        
         {
           label: 'New Included Ink File',
           accelerator: 'CmdOrCtrl+Alt+N',

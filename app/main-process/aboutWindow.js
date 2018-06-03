@@ -1,3 +1,6 @@
+/*
+all information for the about window (version etc)
+*/
 const electron = require('electron');
 const BrowserWindow = electron.BrowserWindow;
 const path = require("path");

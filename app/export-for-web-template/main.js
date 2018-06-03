@@ -34,7 +34,7 @@
         // Generate story text - loop through available content
         while(story.canContinue) {
 
-            // Get ink to generate the next paragraph
+            // Generate the next paragraph
             var paragraphText = story.Continue();
 
             // Create paragraph element
@@ -78,7 +78,7 @@
                 // Tell the story where to go next
                 story.ChooseChoiceIndex(choice.index);
 
-                // Aaand loop
+                //loop
                 continueStory();
             });
         });
