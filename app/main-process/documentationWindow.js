@@ -1,7 +1,9 @@
 const electron = require('electron');
 const BrowserWindow = electron.BrowserWindow;
 const path = require("path");
-
+/*
+	When user chooses from the top meny Help-Show Documentation
+*/
 const electronWindowOptions = {
   width: 1000,
   height: 650,
